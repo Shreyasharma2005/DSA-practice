@@ -1,0 +1,40 @@
+class Solution {
+    public int findMedian(int[][] matrix) {
+        low=Integer.MAX_VALUE;
+        low=Integer.MIN_VALUE;
+
+        for (int i=0; i<R;i++){
+            low=Math.min(low,matrix[i][0]);
+            high=Math.max(high,matrix[i][C-1]);
+        }
+        int desired=(R**C)/2
+        while (low<=high){
+            int mid=low+(high-low)/2;
+            int count=0;
+            for (int i = 0; i < R; i++) {
+                count += upperBound(matrix[i], mid);
+            }
+
+            if (count <= desired) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return low;
+    }
+     int upperBound(int[] row, int target) {
+        int low = 0, high = row.length;
+
+        while (low < high) {
+            int mid = (low + high) / 2;
+            if (row[mid] <= target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+
+        return low;
+    }
+}
