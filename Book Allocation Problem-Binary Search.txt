@@ -1,0 +1,45 @@
+class Solution {
+
+    public int countStudents(int[] arr, int pages) {
+        int students = 1;
+        int pagesStudent = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (pagesStudent + arr[i] <= pages) {
+                pagesStudent += arr[i];
+            } else {
+                students++;
+                pagesStudent = arr[i];
+            }
+        }
+
+        return students;
+    }
+
+    public int splitArray(int[] nums, int m) {
+
+        if (m > nums.length) return -1;
+
+        int low = 0;
+        int high = 0;
+
+        for (int num : nums) {
+            low = Math.max(low, num); // max element
+            high += num;              // total sum
+        }
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            int students = countStudents(nums, mid);
+
+            if (students > m) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return low;
+    }
+}
