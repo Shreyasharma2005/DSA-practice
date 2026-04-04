@@ -1,0 +1,93 @@
+import java.util.*;
+
+class Solution {
+
+    ArrayList<Integer> heap;
+
+    public void initializeHeap() {
+        heap = new ArrayList<>();
+    }
+
+    public void insert(int key) {
+        heap.add(key);
+        int i = heap.size() - 1;
+
+        // heapify up
+        while (i > 0) {
+            int parent = (i - 1) / 2;
+
+            if (heap.get(parent) < heap.get(i)) {
+                Collections.swap(heap, parent, i);
+                i = parent;
+            } else break;
+        }
+    }
+
+    public void changeKey(int index, int newVal) {
+        int oldVal = heap.get(index);
+        heap.set(index, newVal);
+
+        if (newVal > oldVal) {
+            // heapify up
+            int i = index;
+            while (i > 0) {
+                int parent = (i - 1) / 2;
+                if (heap.get(parent) < heap.get(i)) {
+                    Collections.swap(heap, parent, i);
+                    i = parent;
+                } else break;
+            }
+        } else {
+            // heapify down
+            heapify(index);
+        }
+    }
+
+    public void extractMax() {
+        int lastIndex = heap.size() - 1;
+
+        Collections.swap(heap, 0, lastIndex);
+        heap.remove(lastIndex);
+
+        heapify(0);
+    }
+
+    public boolean isEmpty() {
+        return heap.size() == 0;
+    }
+
+    public int getMax() {
+        return heap.get(0);
+    }
+
+    public int heapSize() {
+        return heap.size();
+    }
+
+    // heapify down
+    private void heapify(int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < heap.size() && heap.get(left) > heap.get(largest)) {
+            largest = left;
+        }
+
+        if (right < heap.size() && heap.get(right) > heap.get(largest)) {
+            largest = right;
+        }
+
+        // special rule: if equal, choose LEFT
+        if (left < heap.size() && right < heap.size() &&
+            heap.get(left).equals(heap.get(right)) &&
+            heap.get(left) > heap.get(i)) {
+            largest = left;
+        }
+
+        if (largest != i) {
+            Collections.swap(heap, i, largest);
+            heapify(largest);
+        }
+    }
+}
