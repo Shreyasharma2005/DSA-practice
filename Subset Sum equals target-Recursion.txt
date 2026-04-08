@@ -1,0 +1,15 @@
+class Solution {
+    public boolean isSubsetSum(int[] arr, int target) {
+      return helper(0,0,arr,target);
+    }
+    boolean helper(int index,int currentSum,int[] arr,int target){
+        if(currentSum==target)return true;
+        if(index==arr.length)return false;
+
+        if(helper(index+1,currentSum+arr[index],arr,target))return true;
+
+        if(helper(index+1,currentSum,arr,target))return true;
+
+        return false;
+    }
+}
