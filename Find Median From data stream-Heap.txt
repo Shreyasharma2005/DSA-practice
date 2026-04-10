@@ -1,0 +1,48 @@
+class MedianFinder {
+    PriorityQueue<Integer> leftside=new PriorityQueue<>(Collections.reverseOrder());
+    PriorityQueue<Integer> rightside=new PriorityQueue<>();
+    int moveval;
+    int totalelements=0;
+
+    public MedianFinder() {
+    
+    }
+    
+    public void addNum(int num) {
+        if(leftside.isEmpty() || num<=leftside.peek()){
+            leftside.add(num);
+            totalelements++;
+        }else{
+            rightside.add(num);
+            totalelements++;
+        }
+        if(leftside.size()>rightside.size()+1){
+            moveval=leftside.peek();
+            leftside.poll();
+            rightside.add(moveval);
+        }else if(rightside.size()>leftside.size()+1){
+            moveval=rightside.peek();
+            rightside.poll();
+            leftside.add(moveval);
+        }
+    }
+    
+    public double findMedian() {
+         if (totalelements % 2 == 0) {
+            return (leftside.peek() + rightside.peek()) / 2.0;
+        } else {
+            if (leftside.size() > rightside.size()) {
+                return leftside.peek();
+            } else {
+                return rightside.peek();
+            }
+        }
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
