@@ -1,0 +1,32 @@
+class ArrayStack {
+    int[] arr;
+    int top;
+    top=-1;
+    int value;
+    public ArrayStack() {
+        
+    }
+
+    public void push(int x) {
+       top++;
+       arr[top]=x;
+    }
+
+    public int pop() {
+      value=arr[top];
+      top--;
+      return value
+    }
+
+    public int top() {
+        return arr[top];
+    }
+
+    public boolean isEmpty() {
+        if(top==-1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
