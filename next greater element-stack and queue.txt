@@ -1,0 +1,38 @@
+import java.util.*;
+
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+
+        // Step 1: map to store number → next greater
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // Step 2: stack to process nums2
+        Stack<Integer> stack = new Stack<>();
+
+        // Traverse nums2
+        for (int num : nums2) {
+
+            // Resolve all smaller elements waiting in stack
+            while (!stack.isEmpty() && num > stack.peek()) {
+                int smaller = stack.pop();
+                map.put(smaller, num); // found next greater
+            }
+
+            // push current element
+            stack.push(num);
+        }
+
+        // Remaining elements have no next greater
+        while (!stack.isEmpty()) {
+            map.put(stack.pop(), -1);
+        }
+
+        // Step 3: build result for nums1
+        int[] result = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            result[i] = map.get(nums1[i]);
+        }
+
+        return result;
+    }
+}
