@@ -1,0 +1,23 @@
+class Solution {
+    public void sortStack(Stack<Integer> stack) {
+        int top = stack.pop();
+
+        sortStack(stack);
+
+        insertCorrect(stack, top);
+    }
+
+    private static void insertCorrect(Stack<Integer> stack, int x) {
+        // for descending order → largest on top
+        if (stack.isEmpty() || x > stack.peek()) {
+            stack.push(x);
+            return;
+        }
+
+        int temp = stack.pop();
+        insertCorrect(stack, x);
+        stack.push(temp);
+    }
+}
+    }
+}
